@@ -1,9 +1,15 @@
 
+# ==========================================
+#   Copyright (c) YEAR dynamic_static
+#       Licensed under the MIT license
+#     http://opensource.org/licenses/MIT
+# ==========================================
+
 cmake_minimum_required(VERSION 3.17 FATAL_ERROR)
 project(dynamic_static.placeholder)
 
 ################################################################################
-# Dependencies
+# Link libraries
 set(external "${CMAKE_CURRENT_LIST_DIR}/external/")
 string(REPLACE "\\" "/" DYNAMIC_STATIC "$ENV{DYNAMIC_STATIC}")
 include("${external}/dynamic_static.build.cmake")
@@ -17,8 +23,14 @@ list(APPEND linkLibraries
 )
 
 ################################################################################
-# Include files
+# Include directories
 set(includeDirectory "${CMAKE_CURRENT_LIST_DIR}/include/")
+list(APPEND includeDirectories
+    "${includeDirectory}/"
+)
+
+################################################################################
+# Include files
 set(includePath "${includeDirectory}/dynamic_static/")
 list(APPEND includeFiles
     "${includePath}/placeholder.hpp"
@@ -35,7 +47,8 @@ list(APPEND sourceFiles
 # Target
 dst_add_static_library(
     target ${CMAKE_PROJECT_NAME}
-    includeDirectories PUBLIC "${includeDirectory}/"
+    linkLibraries "${linkLibraries}"
+    includeDirectories "${includeDirectories}"
     includeFiles "${includeFiles}"
     sourceFiles "${sourceFiles}"
 )
